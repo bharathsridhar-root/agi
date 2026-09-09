@@ -1,84 +1,168 @@
-import React, { useState, useEffect } from 'react';
+import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
-import { motion } from 'framer-motion';
+import { useRouter } from 'next/router';
+import { IconMenu, IconClose, IconShield, IconArrowRight } from '@/components/ui/Icon';
+
+const NAV = [
+  { id: 'cascade', label: 'The Cascade' },
+  { id: 'simulator', label: 'Simulator' },
+  { id: 'story', label: 'The Last Permission' },
+  { id: 'principles', label: 'Principles' },
+];
 
 export default function Navigation() {
-  const [isScrolled, setIsScrolled] = useState(false);
-  const [activeSection, setActiveSection] = useState('home');
+  const router = useRouter();
+  const onIndex = router.pathname === '/';
+  const [open, setOpen] = useState(false);
+  const [scrolled, setScrolled] = useState(false);
+  const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
-    const handleScroll = () => {
-      setIsScrolled(window.scrollY > 50);
-    };
-
-    window.addEventListener('scroll', handleScroll);
-    return () => window.removeEventListener('scroll', handleScroll);
+    const onScroll = () => setScrolled(window.scrollY > 12);
+    onScroll();
+    window.addEventListener('scroll', onScroll, { passive: true });
+    return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  const navItems = [
-    { label: 'Framework', href: '#framework' },
-    { label: 'Scenarios', href: '#scenarios' },
-    { label: 'Principles', href: '#principles' },
-    { label: 'Defense', href: '#defense' },
-  ];
+  /* Highlight the section currently in view. */
+  useEffect(() => {
+    if (!onIndex) return;
+    const targets = NAV.map((n) => document.getElementById(n.id)).filter(
+      (el): el is HTMLElement => Boolean(el)
+    );
+    if (targets.length === 0) return;
+    const obs = new IntersectionObserver(
+      (entries) => {
+        const visible = entries
+          .filter((e) => e.isIntersecting)
+          .sort((a, b) => b.intersectionRatio - a.intersectionRatio);
+        if (visible[0]) setActive(visible[0].target.id);
+      },
+      { rootMargin: '-72px 0px -55% 0px', threshold: [0.05, 0.25, 0.5] }
+    );
+    targets.forEach((t) => obs.observe(t));
+    return () => obs.disconnect();
+  }, [onIndex]);
+
+  // Lock scroll behind the mobile sheet.
+  useEffect(() => {
+    document.body.style.overflow = open ? 'hidden' : '';
+    return () => {
+      document.body.style.overflow = '';
+    };
+  }, [open]);
+
+  const hrefFor = (id: string) => (onIndex ? `#${id}` : `/#${id}`);
 
   return (
-    <motion.nav
-      className={`fixed top-0 w-full z-50 transition-all duration-300 ${
-        isScrolled
-          ? 'bg-slate-900/95 backdrop-blur-sm border-b border-slate-700'
-          : 'bg-transparent'
+    <header
+      className={`fixed inset-x-0 top-0 z-50 transition-colors duration-200 ${
+        scrolled || open
+          ? 'border-b border-line bg-plane/90 backdrop-blur-md'
+          : 'border-b border-transparent'
       }`}
-      initial={{ y: -100 }}
-      animate={{ y: 0 }}
-      transition={{ duration: 0.5 }}
     >
-      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex justify-between items-center h-16">
-          {/* Logo */}
-          <motion.div
-            className="text-2xl font-bold gradient-text cursor-pointer"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            ⚖️ CAIGP
-          </motion.div>
+      <nav
+        className="mx-auto flex h-16 max-w-content items-center gap-4 px-5 sm:px-8"
+        aria-label="Primary"
+      >
+        <Link
+          href="/"
+          className="flex shrink-0 items-center gap-2.5 text-ink-primary transition-opacity hover:opacity-80"
+        >
+          <span className="text-accent">
+            <IconShield size={20} />
+          </span>
+          <span className="text-[15px] font-semibold tracking-[-0.01em]">CAIGP</span>
+        </Link>
 
-          {/* Navigation Links */}
-          <div className="hidden md:flex space-x-8">
-            {navItems.map((item, index) => (
-              <motion.a
-                key={index}
-                href={item.href}
-                className="text-slate-300 hover:text-blue-400 transition-colors duration-300 text-sm font-medium"
-                whileHover={{ scale: 1.05 }}
-                whileTap={{ scale: 0.95 }}
+        <ul className="ml-4 hidden items-center gap-1 lg:flex">
+          {NAV.map((n) => (
+            <li key={n.id}>
+              <a
+                href={hrefFor(n.id)}
+                aria-current={active === n.id ? 'true' : undefined}
+                className={`rounded-md px-3 py-1.5 text-[13px] transition-colors ${
+                  active === n.id
+                    ? 'bg-white/[0.06] text-ink-primary'
+                    : 'text-ink-secondary hover:bg-white/[0.04] hover:text-ink-primary'
+                }`}
               >
-                {item.label}
-              </motion.a>
-            ))}
-          </div>
-
-          {/* CTA Button */}
-          <motion.button
-            className="hidden sm:block px-6 py-2 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-medium hover:shadow-lg hover:shadow-blue-500/50 transition-all duration-300"
-            whileHover={{ scale: 1.05 }}
-            whileTap={{ scale: 0.95 }}
-          >
-            Launch Demo
-          </motion.button>
-
-          {/* Mobile menu button */}
-          <div className="md:hidden">
-            <motion.button
-              className="p-2 text-blue-400"
-              whileTap={{ scale: 0.95 }}
+                {n.label}
+              </a>
+            </li>
+          ))}
+          <li>
+            <Link
+              href="/framework"
+              className={`rounded-md px-3 py-1.5 text-[13px] transition-colors ${
+                router.pathname === '/framework'
+                  ? 'bg-white/[0.06] text-ink-primary'
+                  : 'text-ink-secondary hover:bg-white/[0.04] hover:text-ink-primary'
+              }`}
             >
-              ☰
-            </motion.button>
-          </div>
+              Framework
+            </Link>
+          </li>
+        </ul>
+
+        <div className="ml-auto flex items-center gap-2">
+          <a
+            href={onIndex ? '#simulator' : '/#simulator'}
+            className="hidden h-9 items-center gap-1.5 rounded-md bg-accent px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-[#2f76cd] sm:inline-flex"
+          >
+            Run the simulator
+            <IconArrowRight size={14} />
+          </a>
+          <button
+            type="button"
+            onClick={() => setOpen((v) => !v)}
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-ink-secondary transition-colors hover:bg-white/5 hover:text-ink-primary lg:hidden"
+            aria-expanded={open}
+            aria-controls="mobile-nav"
+            aria-label={open ? 'Close menu' : 'Open menu'}
+          >
+            {open ? <IconClose size={19} /> : <IconMenu size={19} />}
+          </button>
         </div>
-      </div>
-    </motion.nav>
+      </nav>
+
+      {open ? (
+        <div id="mobile-nav" className="border-t border-line bg-plane lg:hidden">
+          <ul className="mx-auto max-w-content px-5 py-3 sm:px-8">
+            {NAV.map((n) => (
+              <li key={n.id}>
+                <a
+                  href={hrefFor(n.id)}
+                  onClick={() => setOpen(false)}
+                  className="block rounded-md px-2 py-2.5 text-sm text-ink-secondary transition-colors hover:bg-white/5 hover:text-ink-primary"
+                >
+                  {n.label}
+                </a>
+              </li>
+            ))}
+            <li>
+              <Link
+                href="/framework"
+                onClick={() => setOpen(false)}
+                className="block rounded-md px-2 py-2.5 text-sm text-ink-secondary transition-colors hover:bg-white/5 hover:text-ink-primary"
+              >
+                Framework
+              </Link>
+            </li>
+            <li className="mt-2 border-t border-line pt-3">
+              <a
+                href={onIndex ? '#simulator' : '/#simulator'}
+                onClick={() => setOpen(false)}
+                className="inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-md bg-accent px-4 text-sm font-medium text-white"
+              >
+                Run the simulator
+                <IconArrowRight size={15} />
+              </a>
+            </li>
+          </ul>
+        </div>
+      ) : null}
+    </header>
   );
 }

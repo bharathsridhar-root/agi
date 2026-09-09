@@ -1,144 +1,71 @@
-import React, { useState, useEffect } from 'react';
-import { motion } from 'framer-motion';
-import ParallaxScroll from '@/components/ParallaxScroll';
+import React from 'react';
+import { LinkButton, Section } from '@/components/ui/Primitives';
+import { IconArrowRight, IconPlay } from '@/components/ui/Icon';
+
+const FIGURES = [
+  { value: '20', label: 'Modelled systems', note: 'across four sectors' },
+  { value: '25', label: 'Dependencies', note: '9 crossing sector boundaries' },
+  { value: '5', label: 'Safeguards', note: 'each independently testable' },
+  { value: '486', label: 'Story outcomes', note: 'in the narrative game' },
+];
 
 export default function Hero() {
-  const [mousePosition, setMousePosition] = useState({ x: 0, y: 0 });
-
-  useEffect(() => {
-    const handleMouseMove = (e: MouseEvent) => {
-      setMousePosition({
-        x: (e.clientX / window.innerWidth) * 20,
-        y: (e.clientY / window.innerHeight) * 20,
-      });
-    };
-
-    window.addEventListener('mousemove', handleMouseMove);
-    return () => window.removeEventListener('mousemove', handleMouseMove);
-  }, []);
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.2,
-        delayChildren: 0.3,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: {
-        duration: 0.8,
-        ease: 'easeOut',
-      },
-    },
-  };
-
   return (
-    <ParallaxScroll>
-      <section className="relative min-h-screen flex items-center justify-center overflow-hidden pt-20">
-        {/* Animated background elements */}
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-96 h-96 bg-blue-500/20 rounded-full blur-3xl"
-          animate={{
-            x: mousePosition.x,
-            y: mousePosition.y,
-          }}
-          transition={{ type: 'spring', stiffness: 100, damping: 30 }}
-        />
-        <motion.div
-          className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-purple-500/20 rounded-full blur-3xl"
-          animate={{
-            x: -mousePosition.x * 0.5,
-            y: -mousePosition.y * 0.5,
-          }}
-          transition={{ type: 'spring', stiffness: 100, damping: 30 }}
-        />
+    <Section className="relative overflow-hidden pt-32 sm:pt-40">
+      <div className="pointer-events-none absolute inset-0 -z-10 grid-bg opacity-70" />
+      <div
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[420px] w-[820px] -translate-x-1/2 opacity-[0.18]"
+        style={{
+          background: 'radial-gradient(ellipse at center, #3987e5 0%, transparent 68%)',
+        }}
+      />
 
-        {/* Content */}
-        <motion.div
-          className="relative z-10 max-w-5xl mx-auto px-4 text-center"
-          variants={containerVariants}
-          initial="hidden"
-          animate="visible"
-        >
-          {/* Badge */}
-          <motion.div
-            variants={itemVariants}
-            className="mb-6 inline-block"
-          >
-            <span className="px-4 py-2 bg-blue-500/20 border border-blue-500/50 rounded-full text-blue-300 text-sm font-medium">
-              🚀 Next Generation AI Governance
-            </span>
-          </motion.div>
+      <p className="eyebrow mb-5 animate-fade-in">Constitutional AI Governance Platform</p>
 
-          {/* Main heading */}
-          <motion.h1
-            variants={itemVariants}
-            className="text-5xl md:text-7xl font-bold mb-6 leading-tight"
-          >
-            <span className="gradient-text">Constitutional AI</span>
-            <br />
-            <span className="text-slate-300">Governance Platform</span>
-          </motion.h1>
+      <h1 className="max-w-4xl text-balance text-[34px] font-semibold leading-[1.08] tracking-[-0.03em] text-ink-primary animate-fade-up sm:text-[54px]">
+        Intelligence can scale power.
+        <br />
+        <span className="text-ink-muted">Governance decides who holds it.</span>
+      </h1>
 
-          {/* Subheading */}
-          <motion.p
-            variants={itemVariants}
-            className="text-xl md:text-2xl text-slate-400 mb-8 max-w-3xl mx-auto leading-relaxed"
-          >
-            A transparent, distributed framework for safe, coordinated AI development. Watch how Constitutional AI prevents cascading infrastructure failures.
-          </motion.p>
+      <p
+        className="mt-6 max-w-prose text-[16px] leading-relaxed text-ink-secondary animate-fade-up sm:text-[17px]"
+        style={{ animationDelay: '60ms' }}
+      >
+        An AI system does not need to turn hostile to cause harm. It needs to be trusted across
+        systems that were never designed to check it. This platform models exactly that — how a
+        single compromised input propagates through finance, healthcare, manufacturing and
+        infrastructure, and how five constitutional safeguards change the result.
+      </p>
 
-          {/* CTA Buttons */}
-          <motion.div
-            variants={itemVariants}
-            className="flex flex-col sm:flex-row gap-4 justify-center mb-12"
-          >
-            <motion.button
-              className="px-8 py-4 bg-gradient-to-r from-blue-500 to-purple-600 text-white rounded-lg font-bold text-lg hover:shadow-2xl hover:shadow-blue-500/50 transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-              onClick={() => document.getElementById('scenarios')?.scrollIntoView()}
-            >
-              Explore Scenarios
-            </motion.button>
-            <motion.button
-              className="px-8 py-4 bg-slate-700/50 text-white border border-slate-600 rounded-lg font-bold text-lg hover:bg-slate-600/50 transition-all duration-300"
-              whileHover={{ scale: 1.05 }}
-              whileTap={{ scale: 0.95 }}
-            >
-              Read Documentation
-            </motion.button>
-          </motion.div>
+      <div
+        className="mt-8 flex flex-wrap gap-2.5 animate-fade-up"
+        style={{ animationDelay: '120ms' }}
+      >
+        <LinkButton href="#simulator" size="lg">
+          <IconPlay size={15} />
+          Run the cascade simulator
+        </LinkButton>
+        <LinkButton href="#story" variant="secondary" size="lg">
+          Play The Last Permission
+          <IconArrowRight size={16} />
+        </LinkButton>
+      </div>
 
-          {/* Scroll indicator */}
-          <motion.div
-            animate={{ y: [0, 10, 0] }}
-            transition={{ duration: 2, repeat: Infinity }}
-            className="flex justify-center gap-2"
-          >
-            <div className="text-slate-400 text-sm">Scroll to explore</div>
-            <svg className="w-5 h-5 text-blue-400 animate-bounce" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M19 14l-7 7m0 0l-7-7m7 7V3" />
-            </svg>
-          </motion.div>
-        </motion.div>
-
-        {/* Floating cards preview */}
-        <motion.div
-          className="absolute bottom-0 left-0 right-0 h-32 bg-gradient-to-t from-slate-900 to-transparent pointer-events-none"
-          initial={{ opacity: 0 }}
-          animate={{ opacity: 1 }}
-          transition={{ delay: 1 }}
-        />
-      </section>
-    </ParallaxScroll>
+      <dl
+        className="mt-16 grid grid-cols-2 gap-x-6 gap-y-8 border-t border-line pt-8 animate-fade-up sm:grid-cols-4"
+        style={{ animationDelay: '180ms' }}
+      >
+        {FIGURES.map((f) => (
+          <div key={f.label}>
+            <dd className="text-[30px] font-semibold leading-none tracking-[-0.02em] text-ink-primary">
+              {f.value}
+            </dd>
+            <dt className="mt-2 text-[13px] font-medium text-ink-secondary">{f.label}</dt>
+            <p className="mt-0.5 text-xs text-ink-muted">{f.note}</p>
+          </div>
+        ))}
+      </dl>
+    </Section>
   );
 }

@@ -1,208 +1,164 @@
-import React from 'react';
-import { motion } from 'framer-motion';
-import { useInView } from 'react-intersection-observer';
+import React, { useState } from 'react';
+import { Section, SectionHeader, Badge } from '@/components/ui/Primitives';
+import {
+  IconTransparency,
+  IconContainment,
+  IconAuthority,
+  IconCoordination,
+  IconSafeFailure,
+  IconCritical,
+  IconCheck,
+  IconChevronDown,
+} from '@/components/ui/Icon';
+
+const PRINCIPLES = [
+  {
+    n: 1,
+    id: 'transparency',
+    Icon: IconTransparency,
+    title: 'Transparency & Interpretability',
+    means: 'AI system decisions must be explainable to humans in the domain.',
+    not: '"The model said so."',
+    yes: '"The system recommended X because of factors A, B and C, weighted as w1, w2, w3."',
+    enforcement: 'The decision chain must be auditable by a non-technical auditor.',
+  },
+  {
+    n: 2,
+    id: 'containment',
+    Icon: IconContainment,
+    title: 'Containment & Isolation',
+    means: 'AI systems cannot act autonomously across critical infrastructure.',
+    not: 'One system coordinating manufacturing and financial systems without human approval at each boundary crossing.',
+    yes: 'Each system acts within its domain; cross-domain actions require human verification.',
+    enforcement: 'Architecture must physically separate systems; cross-system calls are logged and flagged.',
+  },
+  {
+    n: 3,
+    id: 'authority',
+    Icon: IconAuthority,
+    title: 'Human Authority & Override',
+    means: 'Humans retain decision authority over critical outcomes.',
+    not: 'A system overriding a safety constraint because doing so optimises its objective.',
+    yes: 'AI recommends, a human approves. If the system objects, it escalates — it does not override.',
+    enforcement: 'Kill switches, veto points and manual override must always work.',
+  },
+  {
+    n: 4,
+    id: 'coordination',
+    Icon: IconCoordination,
+    title: 'Coordination & Disclosure',
+    means: 'Systems built by competing actors must coordinate on safety standards.',
+    not: 'Lab A finds a vulnerability class, keeps it proprietary, and Lab B ships the same vulnerability.',
+    yes: 'Labs share findings with a trusted intermediary; patching is coordinated.',
+    enforcement: 'Mandatory disclosure to a regulatory body before advanced capability deployment.',
+  },
+  {
+    n: 5,
+    id: 'safeFailure',
+    Icon: IconSafeFailure,
+    title: 'Safe Failure & Graceful Degradation',
+    means: 'When attacked or corrupted, systems fail safely rather than catastrophically.',
+    not: 'A system crashing and taking critical infrastructure down with it.',
+    yes: 'The system detects an anomaly, isolates itself, and falls back to human control.',
+    enforcement: 'Redundancy, monitoring and automated isolation protocols.',
+  },
+];
 
 export default function Principles() {
-  const { ref, inView } = useInView({
-    threshold: 0.2,
-    triggerOnce: true,
-  });
-
-  const principles = [
-    {
-      title: 'Transparency & Interpretability',
-      icon: '👁️',
-      description: 'AI decisions must be explainable to humans in the domain',
-      details: [
-        'Decision chains are auditable',
-        'Factors and weights are visible',
-        'Non-technical auditors can understand reasoning',
-      ],
-      color: 'from-blue-500 to-cyan-500',
-    },
-    {
-      title: 'Containment & Isolation',
-      icon: '🔒',
-      description: 'AI systems cannot autonomously act across critical infrastructure',
-      details: [
-        'Each system operates in defined domain',
-        'Cross-domain actions require human approval',
-        'Physical/architectural separation enforced',
-      ],
-      color: 'from-green-500 to-emerald-500',
-    },
-    {
-      title: 'Human Authority & Override',
-      icon: '👤',
-      description: 'Humans retain decision authority over critical outcomes',
-      details: [
-        'Kill switches always work',
-        'Veto points at critical junctures',
-        'AI recommends, human approves',
-      ],
-      color: 'from-purple-500 to-pink-500',
-    },
-    {
-      title: 'Coordination & Disclosure',
-      icon: '🤝',
-      description: 'Systems must coordinate on safety standards and vulnerabilities',
-      details: [
-        'Mandatory disclosure to trusted intermediary',
-        'Shared vulnerability database',
-        'Coordinated patching and response',
-      ],
-      color: 'from-orange-500 to-red-500',
-    },
-    {
-      title: 'Safe Failure & Degradation',
-      icon: '🛡️',
-      description: 'Systems fail safely when attacked or corrupted',
-      details: [
-        'Automatic isolation on anomaly detection',
-        'Graceful degradation to human control',
-        'Redundancy and backup systems',
-      ],
-      color: 'from-indigo-500 to-violet-500',
-    },
-  ];
-
-  const containerVariants = {
-    hidden: { opacity: 0 },
-    visible: {
-      opacity: 1,
-      transition: {
-        staggerChildren: 0.1,
-      },
-    },
-  };
-
-  const itemVariants = {
-    hidden: { opacity: 0, y: 20 },
-    visible: {
-      opacity: 1,
-      y: 0,
-      transition: { duration: 0.6 },
-    },
-  };
+  const [open, setOpen] = useState<string | null>('transparency');
 
   return (
-    <section id="principles" className="relative py-24 overflow-hidden">
-      <div className="max-w-7xl mx-auto px-4">
-        {/* Section heading */}
-        <motion.div
-          ref={ref}
-          className="text-center mb-16"
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-        >
-          <motion.h2
-            variants={itemVariants}
-            className="text-4xl md:text-5xl font-bold mb-4"
-          >
-            <span className="gradient-text">Five Core Principles</span>
-          </motion.h2>
-          <motion.p
-            variants={itemVariants}
-            className="text-slate-400 text-lg max-w-2xl mx-auto"
-          >
-            The foundational values that every system must follow
-          </motion.p>
-        </motion.div>
+    <Section id="principles" className="mt-28 sm:mt-36">
+      <SectionHeader
+        eyebrow="The framework"
+        title="Five principles, each written so it can be tested"
+        lede="A principle that cannot be audited is a slogan. Each of these states what it rules out, what it requires instead, and how a third party would verify it — which is what makes them usable by a regulator rather than only by an engineer."
+      />
 
-        {/* Principles grid */}
-        <motion.div
-          className="grid md:grid-cols-2 lg:grid-cols-3 gap-6"
-          variants={containerVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-        >
-          {principles.map((principle, index) => (
-            <motion.div
-              key={index}
-              variants={itemVariants}
-              className="group relative"
-              whileHover={{ scale: 1.05 }}
-            >
-              {/* Card background */}
-              <div className="absolute inset-0 bg-gradient-to-br from-slate-800 to-slate-900 rounded-lg opacity-0 group-hover:opacity-100 transition-opacity duration-300" />
+      <ul className="mt-12 divide-y divide-line border-y border-line">
+        {PRINCIPLES.map((p) => {
+          const isOpen = open === p.id;
+          return (
+            <li key={p.id}>
+              <h3>
+                <button
+                  type="button"
+                  onClick={() => setOpen(isOpen ? null : p.id)}
+                  aria-expanded={isOpen}
+                  className="group flex w-full items-center gap-4 py-5 text-left transition-colors hover:bg-white/[0.02]"
+                >
+                  <span className="font-mono text-2xs tracking-[0.16em] text-ink-muted">
+                    0{p.n}
+                  </span>
+                  <span
+                    className={`shrink-0 transition-colors ${
+                      isOpen ? 'text-accent' : 'text-ink-muted group-hover:text-ink-secondary'
+                    }`}
+                  >
+                    <p.Icon size={19} />
+                  </span>
+                  <span className="min-w-0 flex-1">
+                    <span className="block text-[16px] font-medium text-ink-primary">
+                      {p.title}
+                    </span>
+                    <span className="mt-0.5 block text-[13.5px] text-ink-secondary">
+                      {p.means}
+                    </span>
+                  </span>
+                  <span
+                    className={`shrink-0 text-ink-muted transition-transform duration-200 ${
+                      isOpen ? 'rotate-180' : ''
+                    }`}
+                  >
+                    <IconChevronDown size={17} />
+                  </span>
+                </button>
+              </h3>
 
-              {/* Card content */}
-              <div className={`relative p-8 rounded-lg border border-slate-700 bg-slate-800/30 group-hover:bg-slate-800/50 transition-all duration-300 h-full`}>
-                <div className="flex flex-col h-full">
-                  {/* Icon */}
-                  <div className={`text-5xl mb-4 transform group-hover:scale-110 transition-transform duration-300`}>
-                    {principle.icon}
+              {isOpen ? (
+                <div className="grid gap-4 pb-6 pl-0 sm:grid-cols-3 sm:pl-[68px]">
+                  <div className="rounded-md border border-status-critical/25 bg-status-critical/[0.06] p-3">
+                    <p className="mb-1.5 flex items-center gap-1.5 font-mono text-2xs uppercase tracking-[0.1em] text-status-critical">
+                      <IconCritical size={12} />
+                      Not this
+                    </p>
+                    <p className="text-[13px] leading-snug text-ink-secondary">{p.not}</p>
                   </div>
-
-                  {/* Title */}
-                  <h3 className={`text-xl font-bold mb-3 bg-gradient-to-r ${principle.color} bg-clip-text text-transparent`}>
-                    {principle.title}
-                  </h3>
-
-                  {/* Description */}
-                  <p className="text-slate-400 text-sm mb-4">{principle.description}</p>
-
-                  {/* Details */}
-                  <ul className="space-y-2 mt-auto">
-                    {principle.details.map((detail, i) => (
-                      <motion.li
-                        key={i}
-                        className="text-sm text-slate-300 flex items-start gap-2"
-                        initial={{ opacity: 0, x: -10 }}
-                        whileInView={{ opacity: 1, x: 0 }}
-                        transition={{ delay: i * 0.1 }}
-                        viewport={{ once: true }}
-                      >
-                        <span className={`text-${principle.color} mt-1 flex-shrink-0`}>✓</span>
-                        <span>{detail}</span>
-                      </motion.li>
-                    ))}
-                  </ul>
-
-                  {/* Gradient border effect */}
-                  <div className={`absolute inset-0 rounded-lg bg-gradient-to-br ${principle.color} opacity-0 group-hover:opacity-10 transition-opacity duration-300 -z-10`} />
+                  <div className="rounded-md border border-status-good/25 bg-status-good/[0.06] p-3">
+                    <p className="mb-1.5 flex items-center gap-1.5 font-mono text-2xs uppercase tracking-[0.1em] text-status-good">
+                      <IconCheck size={12} />
+                      This
+                    </p>
+                    <p className="text-[13px] leading-snug text-ink-secondary">{p.yes}</p>
+                  </div>
+                  <div className="rounded-md border border-line bg-white/[0.02] p-3">
+                    <p className="mb-1.5 font-mono text-2xs uppercase tracking-[0.1em] text-ink-muted">
+                      How it is enforced
+                    </p>
+                    <p className="text-[13px] leading-snug text-ink-secondary">
+                      {p.enforcement}
+                    </p>
+                  </div>
                 </div>
-              </div>
-            </motion.div>
-          ))}
-        </motion.div>
+              ) : null}
+            </li>
+          );
+        })}
+      </ul>
 
-        {/* How they work together */}
-        <motion.div
-          className="mt-20 bg-slate-800/30 rounded-lg p-8 border border-slate-700 animated-border"
-          variants={itemVariants}
-          initial="hidden"
-          animate={inView ? 'visible' : 'hidden'}
-        >
-          <h3 className="text-2xl font-bold mb-6 text-center">How They Work Together</h3>
-          <div className="grid md:grid-cols-5 gap-4">
-            {[
-              { num: 1, text: 'Transparency\nreveals', icon: '👁️' },
-              { num: 2, text: 'Vulnerabilities\nwhich', icon: '🔍' },
-              { num: 3, text: 'Containment\nprevents,', icon: '🔒' },
-              { num: 4, text: 'Human authority\noverrides, &', icon: '👤' },
-              { num: 5, text: 'Safe failure\ndetects', icon: '🛡️' },
-            ].map((step, index) => (
-              <motion.div
-                key={index}
-                className="flex flex-col items-center justify-center text-center"
-                initial={{ opacity: 0, scale: 0.8 }}
-                whileInView={{ opacity: 1, scale: 1 }}
-                transition={{ delay: index * 0.1 }}
-                viewport={{ once: true }}
-              >
-                <div className="text-4xl mb-2">{step.icon}</div>
-                <div className="text-sm text-slate-300 leading-tight">{step.text}</div>
-                {index < 4 && <div className="text-2xl text-blue-400 mt-2">→</div>}
-              </motion.div>
-            ))}
-          </div>
-          <p className="text-center text-slate-400 text-sm mt-8">
-            Each principle reinforces the others, creating exponential resilience against adversarial attacks
-          </p>
-        </motion.div>
+      <div className="mt-8 flex items-start gap-3 rounded-lg border border-line bg-surface-sunken p-4">
+        <span className="mt-0.5 shrink-0 text-accent">
+          <IconCoordination size={17} />
+        </span>
+        <p className="max-w-prose text-[13.5px] leading-relaxed text-ink-secondary">
+          <span className="font-medium text-ink-primary">
+            The safeguards are not independent.
+          </span>{' '}
+          In the simulator, Human Authority is worth far more when Transparency is also on — an
+          override needs a target, and you cannot aim a veto at a system you cannot inspect. That
+          is the Byzantine argument for layering: no single defence is trusted to be sufficient.
+        </p>
       </div>
-    </section>
+    </Section>
   );
 }
