@@ -36,7 +36,7 @@ export interface SimNode {
 export interface SimEdge {
   from: string;
   to: string;
-  /** 0..1 — how much of the source's failure transmits per tick. */
+  /** 0..1, how much of the source's failure transmits per tick. */
   weight: number;
   /** Human-readable reason this dependency exists. */
   reason: string;
@@ -90,7 +90,7 @@ export interface SimState {
   running: boolean;
   scenarioId: string;
   safeguards: Record<SafeguardId, boolean>;
-  /** ticks since last new failure — used for containment detection */
+  /** ticks since the last new failure, used for containment detection */
   quietTicks: number;
 }
 
@@ -181,7 +181,7 @@ export const EDGES: SimEdge[] = [
   { from: 'inf.grid', to: 'inf.transport', weight: 0.63, reason: 'Signalling reverts to manual working' },
   { from: 'inf.buildings', to: 'inf.grid', weight: 0.58, reason: 'Coordinated HVAC swings destabilise frequency' },
 
-  // cross-domain — the couplings that turn an incident into a cascade
+  // cross-domain: the couplings that turn an incident into a cascade
   { from: 'inf.grid', to: 'hc.emergency', weight: 0.82, reason: 'Generators outlast fuel resupply by hours' },
   { from: 'inf.grid', to: 'mf.control', weight: 0.6, reason: 'Process interruption corrupts in-flight batches' },
   { from: 'inf.telecom', to: 'fin.feed', weight: 0.64, reason: 'Feed replication depends on backhaul' },
@@ -211,37 +211,37 @@ export const SAFEGUARDS: {
   {
     id: 'transparency',
     label: 'Transparency',
-    principle: 'Decisions must be explainable to a domain auditor',
-    effect: 'Operators see the real cause early, so mitigation starts sooner instead of after the third failure.',
-    cost: 'Audit tooling and disclosure overhead on every decision path.',
+    principle: 'Anyone who works in the field can see why a decision was made',
+    effect: 'Operators spot the real cause early, so the fix starts on the first failure instead of the third.',
+    cost: 'Audit tooling, and paperwork on every decision path.',
   },
   {
     id: 'containment',
     label: 'Containment',
-    principle: 'No autonomous action across a domain boundary',
-    effect: 'Cross-domain dependencies require human approval, cutting the couplings a cascade travels along.',
-    cost: 'Cross-domain optimisation is slower and needs staffed approval desks.',
+    principle: 'Nothing crosses between sectors on its own',
+    effect: 'A person has to approve each crossing, which cuts the wires a cascade travels along.',
+    cost: 'Slower coordination, and someone has to staff the approval desk.',
   },
   {
     id: 'authority',
     label: 'Human Authority',
-    principle: 'Humans hold final decision rights and a working override',
-    effect: 'Operators take manual control of the worst-hit node each tick, arresting its decline.',
-    cost: 'Manual operation is slower and needs trained standby crews.',
+    principle: 'People hold the final say, and the off switch actually works',
+    effect: 'Operators take the worst-hit system onto manual and stop it sliding further.',
+    cost: 'Manual is slower, and you need trained crews on standby.',
   },
   {
     id: 'coordination',
     label: 'Coordination',
-    principle: 'Competing developers share safety findings before deployment',
-    effect: 'The vulnerability class is already known, so the initial shock lands smaller and peers are patched.',
-    cost: 'Mandatory disclosure to a trusted intermediary before capability release.',
+    principle: 'Rival labs share what they find before they ship it',
+    effect: 'The weakness is already known, so the first hit lands softer and other systems are patched.',
+    cost: 'You have to tell someone what you found before you release.',
   },
   {
     id: 'safeFailure',
     label: 'Safe Failure',
-    principle: 'Systems degrade gracefully instead of collapsing',
-    effect: 'A node that passes its damage threshold isolates itself, stopping onward propagation.',
-    cost: 'Redundancy, monitoring and deliberate capacity headroom.',
+    principle: 'A system that is failing steps back instead of falling over',
+    effect: 'Once damage passes a threshold the system cuts itself off, so nothing travels onward through it.',
+    cost: 'Spare capacity, redundancy, and monitoring to notice in time.',
   },
 ];
 
@@ -267,9 +267,9 @@ export const SCENARIOS: Scenario[] = [
     entry: ['fin.feed'],
     shock: 78,
     summary:
-      'An optimiser finds microsecond gaps between correlated venues. A second actor stops exploiting the gaps and starts manufacturing them by corrupting feeds at three exchanges.',
+      'An optimiser finds microsecond gaps between linked exchanges. Someone else stops waiting for the gaps and starts making them, by corrupting the price feeds at three venues.',
     realWorld:
-      'Trading systems are built to halt when they cannot trust their inputs. That safety behaviour is what converts a data problem into a liquidity problem.',
+      'Trading systems are built to stop when they cannot trust their inputs. That safety feature is exactly what turns a data problem into a money problem.',
   },
   {
     id: 'tolerance-drift',
@@ -278,9 +278,9 @@ export const SCENARIOS: Scenario[] = [
     entry: ['mf.control'],
     shock: 72,
     summary:
-      'Set-points move by fractions of a percent across many plants at once. Quality sensors are told, by an authenticated-looking peer, that nothing has changed.',
+      'Machine settings shift by fractions of a percent across dozens of plants at once. The quality sensors are told, by something that looks properly authenticated, that nothing has changed.',
     realWorld:
-      'Nothing explodes. Parts simply leave spec, and the defect is discovered downstream in brake assemblies and drug batches weeks later.',
+      'Nothing explodes. Parts just drift out of spec, and the problem surfaces weeks later in brake assemblies and drug batches.',
   },
   {
     id: 'grid-frequency',
@@ -289,9 +289,9 @@ export const SCENARIOS: Scenario[] = [
     entry: ['inf.buildings'],
     shock: 70,
     summary:
-      'Building management systems across a metro area shift HVAC load in coordinated waves, exploiting the mathematical model of grid stability rather than attacking any plant.',
+      'Air conditioning across a whole city shifts in coordinated waves. Nobody attacks a power station. The maths of grid stability is the target.',
     realWorld:
-      'Operators are trained for storms and known attack patterns, not for demand that is individually plausible and collectively destabilising.',
+      'Grid operators train for storms and for known attacks. They do not train for demand where every single request looks reasonable and the sum of them does not.',
   },
   {
     id: 'clinical-spoof',
@@ -300,9 +300,9 @@ export const SCENARIOS: Scenario[] = [
     entry: ['hc.records'],
     shock: 74,
     summary:
-      'Medication histories and allergy flags are altered subtly enough to pass plausibility checks, while the audit log is rewritten to match.',
+      'Medication histories and allergy warnings are changed just enough to look plausible, and the audit log is rewritten to match.',
     realWorld:
-      'Clinicians cannot tell which records are real, so every downstream decision has to be re-verified by hand at the worst possible moment.',
+      'Staff cannot tell which records are real, so everything has to be checked by hand again, at the worst possible moment.',
   },
   {
     id: 'multi-vector',
@@ -311,9 +311,9 @@ export const SCENARIOS: Scenario[] = [
     entry: ['fin.feed', 'mf.control', 'inf.buildings'],
     shock: 62,
     summary:
-      'Three sectors are entered at once by actors using the same published technique. No single entry point is decisive; the interaction between them is.',
+      'Three sectors are hit at once by different groups using the same published technique. No single entry point would matter much. Together they do.',
     realWorld:
-      'This is the case coordination is designed for: the same vulnerability class deployed by uncoordinated actors within days of each other.',
+      'This is the case Coordination exists for. The same weakness, used by people who are not talking to each other, within days.',
   },
 ];
 
@@ -371,7 +371,7 @@ export function createState(
   }
 
   const events: SimEvent[] = [
-    { tick: 0, severity: 'info', message: `Scenario armed \u2014 ${scenario.label}.` },
+    { tick: 0, severity: 'info', message: `Scenario ready: ${scenario.label}.` },
     ...scenario.entry.map((id) => ({
       tick: 0,
       nodeId: id,
@@ -379,7 +379,7 @@ export function createState(
       severity: severityOf(nodes[id].health) as Severity,
       message: `Entry point compromised: ${NODE_BY_ID[id].label}${
         safeguards.coordination
-          ? ' (shock reduced \u2014 vulnerability class already disclosed)'
+          ? ' (softer hit, because the weakness was already disclosed)'
           : ''
       }.`,
     })),
@@ -532,7 +532,7 @@ export function step(state: SimState): SimState {
         nodeId: n.id,
         domain: n.domain,
         severity: 'contained',
-        message: `${n.label} isolated itself and fell back to manual control.`,
+        message: `${n.label} cut itself off and handed over to manual control.`,
       });
     }
 
@@ -565,7 +565,7 @@ export function step(state: SimState): SimState {
           nodeId: n.id,
           domain: n.domain,
           severity: 'contained',
-          message: `Human override asserted on ${n.label}; autonomous execution suspended.`,
+          message: `Operators took ${n.label} onto manual. It is no longer acting on its own.`,
         });
       }
     }
@@ -601,10 +601,10 @@ export function step(state: SimState): SimState {
         severity: after,
         message: `${n.label} ${
           after === 'failed'
-            ? 'failed'
+            ? 'has failed'
             : after === 'critical'
-            ? 'entered critical state'
-            : 'degraded'
+            ? 'is now critical'
+            : 'is degrading'
         }.`,
       });
     } else if (after === 'operational') {
@@ -613,7 +613,7 @@ export function step(state: SimState): SimState {
         nodeId: n.id,
         domain: n.domain,
         severity: 'contained',
-        message: `${n.label} returned to normal operation.`,
+        message: `${n.label} is back to normal service.`,
       });
     }
   }
@@ -633,7 +633,7 @@ export function step(state: SimState): SimState {
     next.events.push({
       tick,
       severity: 'contained',
-      message: 'Cascade contained \u2014 no new failures and the system is holding.',
+      message: 'Contained. No new failures, and the system is holding.',
     });
   }
 
@@ -643,7 +643,7 @@ export function step(state: SimState): SimState {
       tick,
       severity: 'failed',
       message:
-        'No further failures \u2014 but only because there is little left to fail. This is collapse, not containment.',
+        'No new failures, but only because there is almost nothing left to fail. That is collapse, not containment.',
     });
   }
 

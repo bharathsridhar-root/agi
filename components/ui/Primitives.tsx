@@ -9,11 +9,11 @@ type Size = 'sm' | 'md' | 'lg';
 
 const variants: Record<Variant, string> = {
   primary:
-    'bg-accent text-white hover:bg-[#2f76cd] active:bg-[#2a6ab8] border border-transparent',
+    'bg-accent text-accent-on hover:bg-accent-hover active:bg-accent-hover border border-transparent',
   secondary:
-    'bg-surface-raised text-ink-primary hover:bg-[#232c3c] border border-line-strong',
+    'bg-surface-raised text-ink-primary hover:bg-ink-primary/[0.06] border border-line-strong',
   ghost:
-    'bg-transparent text-ink-secondary hover:text-ink-primary hover:bg-white/5 border border-transparent',
+    'bg-transparent text-ink-secondary hover:text-ink-primary hover:bg-ink-primary/5 border border-transparent',
   danger:
     'bg-transparent text-status-critical hover:bg-status-critical/10 border border-status-critical/40',
 };
@@ -228,12 +228,12 @@ export function Badge({
   icon?: React.ReactNode;
 }) {
   const tones = {
-    neutral: 'border-line-strong text-ink-secondary bg-white/[0.03]',
+    neutral: 'border-line-strong text-ink-secondary bg-ink-primary/[0.03]',
     good: 'border-status-good/40 text-status-good bg-status-good/10',
     warning: 'border-status-warning/40 text-status-warning bg-status-warning/10',
     serious: 'border-status-serious/40 text-status-serious bg-status-serious/10',
     critical: 'border-status-critical/40 text-status-critical bg-status-critical/10',
-    accent: 'border-accent/40 text-accent bg-accent-soft',
+    accent: 'border-accent/40 text-accent bg-accent/10',
   }[tone];
   return (
     <span
@@ -269,7 +269,7 @@ export function Meter({
   }[tone];
   return (
     <div
-      className={`h-1.5 w-full overflow-hidden rounded-full bg-white/[0.07] ${className}`}
+      className={`h-1.5 w-full overflow-hidden rounded-full bg-ink-primary/[0.07] ${className}`}
       role="meter"
       aria-valuenow={Math.round(value)}
       aria-valuemin={0}

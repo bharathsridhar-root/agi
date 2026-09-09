@@ -3,10 +3,10 @@ import { LinkButton, Section } from '@/components/ui/Primitives';
 import { IconArrowRight, IconPlay } from '@/components/ui/Icon';
 
 const FIGURES = [
-  { value: '20', label: 'Modelled systems', note: 'across four sectors' },
-  { value: '25', label: 'Dependencies', note: '9 crossing sector boundaries' },
-  { value: '5', label: 'Safeguards', note: 'each independently testable' },
-  { value: '486', label: 'Story outcomes', note: 'in the narrative game' },
+  { value: '20', label: 'Systems modelled', note: 'across four sectors' },
+  { value: '26', label: 'Dependencies', note: '9 of them cross sectors' },
+  { value: '5', label: 'Safeguards', note: 'each one testable on its own' },
+  { value: '486', label: 'Ways the story ends', note: 'depending on your choices' },
 ];
 
 export default function Hero() {
@@ -14,9 +14,10 @@ export default function Hero() {
     <Section className="relative overflow-hidden pt-32 sm:pt-40">
       <div className="pointer-events-none absolute inset-0 -z-10 grid-bg opacity-70" />
       <div
-        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[420px] w-[820px] -translate-x-1/2 opacity-[0.18]"
+        className="pointer-events-none absolute left-1/2 top-0 -z-10 h-[420px] w-[820px] -translate-x-1/2 opacity-[0.16]"
         style={{
-          background: 'radial-gradient(ellipse at center, #3987e5 0%, transparent 68%)',
+          background:
+            'radial-gradient(ellipse at center, rgb(var(--accent)) 0%, transparent 68%)',
         }}
       />
 
@@ -32,10 +33,10 @@ export default function Hero() {
         className="mt-6 max-w-prose text-[16px] leading-relaxed text-ink-secondary animate-fade-up sm:text-[17px]"
         style={{ animationDelay: '60ms' }}
       >
-        An AI system does not need to turn hostile to cause harm. It needs to be trusted across
-        systems that were never designed to check it. This platform models exactly that — how a
-        single compromised input propagates through finance, healthcare, manufacturing and
-        infrastructure, and how five constitutional safeguards change the result.
+        An AI system doesn&apos;t have to turn hostile to do damage. It just has to be trusted
+        by systems that were never built to check it. That&apos;s what this models: one bad
+        input, and where it travels through finance, healthcare, manufacturing and
+        infrastructure. Then you switch on five safeguards and watch the same thing again.
       </p>
 
       <div

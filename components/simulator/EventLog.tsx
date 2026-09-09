@@ -56,7 +56,7 @@ export default function EventLog({ events }: { events: SimEvent[] }) {
           return (
             <li
               key={`${e.tick}-${i}-${e.nodeId ?? 'sys'}`}
-              className="flex items-start gap-2 rounded px-1.5 py-1 text-xs leading-snug hover:bg-white/[0.03]"
+              className="flex items-start gap-2 rounded px-1.5 py-1 text-xs leading-snug hover:bg-ink-primary/[0.03]"
             >
               <span className="tabular mt-px w-6 shrink-0 text-right font-mono text-2xs text-ink-muted">
                 {e.tick}

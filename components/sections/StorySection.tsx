@@ -7,8 +7,8 @@ export default function StorySection() {
     <Section id="story" className="mt-28 sm:mt-36">
       <SectionHeader
         eyebrow="Interactive narrative"
-        title="The same failure, from inside the room where it is allowed"
-        lede="The simulator shows you the mechanism. This shows you the pressure. You are the oversight engineer, the heatwave is real, and every safeguard you keep costs something a reasonable person will ask you to give up."
+        title="The same failure, from inside the room where it gets approved"
+        lede="The simulator shows you the mechanism. This one shows you the pressure. You're the oversight engineer, the heatwave is real, and every safeguard you hold onto costs something that a reasonable person is going to ask you to give up."
       />
       <div className="mt-8">
         <LastPermission />

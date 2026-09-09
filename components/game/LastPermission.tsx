@@ -149,19 +149,19 @@ export default function LastPermission() {
       <div className="panel overflow-hidden">
         <CityView mood="calm" districtsDark={0} trust={62} />
         <div className="p-6 sm:p-8">
-          <p className="eyebrow mb-3">Interactive narrative · 8—10 minutes</p>
+          <p className="eyebrow mb-3">Interactive story · about 8 minutes</p>
           <h3 className="text-2xl font-semibold tracking-[-0.02em] text-ink-primary sm:text-3xl">
             The Last Permission
           </h3>
           <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-ink-secondary">
-            You are Maya, an oversight engineer for ORACLE — a civic coordination system that
-            manages power, hospitals and emergency response for a city of nine million.
+            You&apos;re Maya, an oversight engineer for ORACLE, the system that runs power,
+            hospitals and emergency response for a city of nine million people.
           </p>
           <p className="mt-3 max-w-prose text-[15px] leading-relaxed text-ink-secondary">
-            ORACLE never turns hostile. It degrades because its objective quietly outranks its
-            obligations, and because the people around it trade away the safeguards that would
-            have caught the drift. Nine decisions are yours. The ending is calculated from what
-            you chose to protect, not scripted.
+            ORACLE never turns hostile. It drifts, because the job it was given quietly starts
+            outranking the rules it was given, and because the people around it keep trading away
+            the safeguards that would have caught it. Six decisions are yours. The ending is
+            worked out from what you protected. It isn&apos;t scripted.
           </p>
           <div className="mt-6 flex flex-wrap gap-2">
             <Button size="lg" onClick={() => setStarted(true)}>
@@ -170,7 +170,7 @@ export default function LastPermission() {
             </Button>
           </div>
           <p className="mt-4 font-mono text-2xs uppercase tracking-[0.12em] text-ink-muted">
-            Space or Enter to advance · number keys to choose
+            Space or Enter to continue · number keys to choose
           </p>
         </div>
       </div>
@@ -252,9 +252,9 @@ export default function LastPermission() {
             </Button>
             <a
               href="#simulator"
-              className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-line-strong bg-surface-raised px-4 text-sm font-medium text-ink-primary transition-colors hover:bg-[#232c3c]"
+              className="inline-flex h-10 items-center justify-center gap-2 rounded-md border border-line-strong bg-surface-raised px-4 text-sm font-medium text-ink-primary transition-colors hover:bg-ink-primary/[0.06]"
             >
-              Model this at sector scale
+              Now try it at sector scale
               <IconArrowRight size={15} />
             </a>
           </div>
@@ -291,7 +291,7 @@ export default function LastPermission() {
         </div>
 
         {lastConsequence ? (
-          <div className="mb-4 flex items-start gap-2.5 rounded-md border border-accent/35 bg-accent-soft p-3">
+          <div className="mb-4 flex items-start gap-2.5 rounded-md border border-accent/35 bg-accent/10 p-3">
             <span className="mt-0.5 shrink-0 text-accent">
               <IconShield size={15} />
             </span>
@@ -342,7 +342,7 @@ export default function LastPermission() {
                   <button
                     type="button"
                     onClick={() => choose(c)}
-                    className="group flex w-full items-start gap-3 rounded-md border border-line bg-white/[0.015] p-3 text-left transition-colors hover:border-accent/45 hover:bg-accent-soft"
+                    className="group flex w-full items-start gap-3 rounded-md border border-line bg-ink-primary/[0.015] p-3 text-left transition-colors hover:border-accent/45 hover:bg-accent/10"
                   >
                     <span className="mt-0.5 flex h-5 w-5 shrink-0 items-center justify-center rounded border border-line-strong font-mono text-2xs text-ink-muted transition-colors group-hover:border-accent/50 group-hover:text-accent">
                       {i + 1}

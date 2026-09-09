@@ -9,7 +9,7 @@ export default function NotFound() {
   return (
     <>
       <Head>
-        <title>Page not found — CAIGP</title>
+        <title>Page not found · CAIGP</title>
         <meta name="robots" content="noindex" />
       </Head>
       <Navigation />
@@ -20,7 +20,7 @@ export default function NotFound() {
             That page does not exist
           </h1>
           <p className="mt-4 max-w-prose text-[15px] leading-relaxed text-ink-secondary">
-            The link may be out of date. Everything on this site is reachable from the home page.
+            The link is probably out of date. Everything here is reachable from the home page.
           </p>
           <div className="mt-8 flex flex-wrap gap-2.5">
             <LinkButton href="/" size="md">

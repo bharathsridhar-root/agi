@@ -3,10 +3,10 @@ import { LinkButton, Section } from '@/components/ui/Primitives';
 import { IconArrowRight, IconGithub } from '@/components/ui/Icon';
 
 const QUESTIONS = [
-  { q: 'Who is accountable?', a: 'Name the person, not the system. If the answer is "the model approved it", there is no answer.' },
-  { q: 'What may it access?', a: 'Enumerate the boundaries it may cross, and who stands at each one.' },
-  { q: 'How are decisions inspected?', a: 'An evidence chain a non-technical auditor can follow, not a confidence score.' },
-  { q: 'How can it be stopped?', a: 'A veto that has been exercised recently enough that nobody treats it as theoretical.' },
+  { q: 'Who is accountable?', a: 'Name a person, not a system. If the answer is "the model approved it", you do not have an answer.' },
+  { q: 'What can it reach?', a: 'List the boundaries it is allowed to cross, and who is standing at each one.' },
+  { q: 'How do you check its decisions?', a: 'Working that an auditor can follow without an engineering degree. Not a confidence score.' },
+  { q: 'How do you stop it?', a: 'A veto somebody has used recently enough that nobody thinks of it as hypothetical.' },
 ];
 
 export default function CTA() {
@@ -16,8 +16,8 @@ export default function CTA() {
         <div className="border-b border-line bg-surface-sunken p-6 sm:p-9">
           <p className="eyebrow mb-4">Before giving AI more power</p>
           <h2 className="max-w-3xl text-balance text-2xl font-semibold leading-[1.15] tracking-[-0.02em] text-ink-primary sm:text-[32px]">
-            Decide these four things first. They are cheap to answer now and expensive to answer
-            during an incident.
+            Answer these four first. They cost almost nothing today, and a great deal in the
+            middle of an incident.
           </h2>
         </div>
 
@@ -59,7 +59,7 @@ export default function CTA() {
           ruler.&rdquo;
         </p>
         <footer className="mt-4 font-mono text-2xs uppercase tracking-[0.14em] text-ink-muted">
-          Maya — The Last Permission
+          Maya, in The Last Permission
         </footer>
       </blockquote>
     </Section>

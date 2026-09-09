@@ -2,8 +2,10 @@ import React, { useEffect, useState } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/router';
 import { IconMenu, IconClose, IconShield, IconArrowRight } from '@/components/ui/Icon';
+import ThemeToggle from '@/components/ui/ThemeToggle';
 
 const NAV = [
+  { id: 'comic', label: 'In Brief' },
   { id: 'cascade', label: 'The Cascade' },
   { id: 'simulator', label: 'Simulator' },
   { id: 'story', label: 'The Last Permission' },
@@ -84,8 +86,8 @@ export default function Navigation() {
                 aria-current={active === n.id ? 'true' : undefined}
                 className={`rounded-md px-3 py-1.5 text-[13px] transition-colors ${
                   active === n.id
-                    ? 'bg-white/[0.06] text-ink-primary'
-                    : 'text-ink-secondary hover:bg-white/[0.04] hover:text-ink-primary'
+                    ? 'bg-ink-primary/[0.06] text-ink-primary'
+                    : 'text-ink-secondary hover:bg-ink-primary/[0.04] hover:text-ink-primary'
                 }`}
               >
                 {n.label}
@@ -97,8 +99,8 @@ export default function Navigation() {
               href="/framework"
               className={`rounded-md px-3 py-1.5 text-[13px] transition-colors ${
                 router.pathname === '/framework'
-                  ? 'bg-white/[0.06] text-ink-primary'
-                  : 'text-ink-secondary hover:bg-white/[0.04] hover:text-ink-primary'
+                  ? 'bg-ink-primary/[0.06] text-ink-primary'
+                  : 'text-ink-secondary hover:bg-ink-primary/[0.04] hover:text-ink-primary'
               }`}
             >
               Framework
@@ -107,9 +109,10 @@ export default function Navigation() {
         </ul>
 
         <div className="ml-auto flex items-center gap-2">
+          <ThemeToggle className="hidden sm:inline-flex" />
           <a
             href={onIndex ? '#simulator' : '/#simulator'}
-            className="hidden h-9 items-center gap-1.5 rounded-md bg-accent px-3.5 text-[13px] font-medium text-white transition-colors hover:bg-[#2f76cd] sm:inline-flex"
+            className="hidden h-9 items-center gap-1.5 rounded-md bg-accent px-3.5 text-[13px] font-medium text-accent-on transition-colors hover:bg-accent-hover sm:inline-flex"
           >
             Run the simulator
             <IconArrowRight size={14} />
@@ -117,7 +120,7 @@ export default function Navigation() {
           <button
             type="button"
             onClick={() => setOpen((v) => !v)}
-            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-ink-secondary transition-colors hover:bg-white/5 hover:text-ink-primary lg:hidden"
+            className="inline-flex h-9 w-9 items-center justify-center rounded-md text-ink-secondary transition-colors hover:bg-ink-primary/5 hover:text-ink-primary lg:hidden"
             aria-expanded={open}
             aria-controls="mobile-nav"
             aria-label={open ? 'Close menu' : 'Open menu'}
@@ -135,7 +138,7 @@ export default function Navigation() {
                 <a
                   href={hrefFor(n.id)}
                   onClick={() => setOpen(false)}
-                  className="block rounded-md px-2 py-2.5 text-sm text-ink-secondary transition-colors hover:bg-white/5 hover:text-ink-primary"
+                  className="block rounded-md px-2 py-2.5 text-sm text-ink-secondary transition-colors hover:bg-ink-primary/5 hover:text-ink-primary"
                 >
                   {n.label}
                 </a>
@@ -145,16 +148,20 @@ export default function Navigation() {
               <Link
                 href="/framework"
                 onClick={() => setOpen(false)}
-                className="block rounded-md px-2 py-2.5 text-sm text-ink-secondary transition-colors hover:bg-white/5 hover:text-ink-primary"
+                className="block rounded-md px-2 py-2.5 text-sm text-ink-secondary transition-colors hover:bg-ink-primary/5 hover:text-ink-primary"
               >
                 Framework
               </Link>
             </li>
-            <li className="mt-2 border-t border-line pt-3">
+            <li className="mt-2 flex items-center justify-between border-t border-line pt-3">
+              <span className="text-sm text-ink-secondary">Theme</span>
+              <ThemeToggle />
+            </li>
+            <li className="mt-2">
               <a
                 href={onIndex ? '#simulator' : '/#simulator'}
                 onClick={() => setOpen(false)}
-                className="inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-md bg-accent px-4 text-sm font-medium text-white"
+                className="inline-flex h-10 w-full items-center justify-center gap-1.5 rounded-md bg-accent px-4 text-sm font-medium text-accent-on"
               >
                 Run the simulator
                 <IconArrowRight size={15} />

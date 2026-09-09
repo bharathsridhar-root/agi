@@ -72,7 +72,7 @@ export default function DomainGrid({ state }: { state: SimState }) {
                   <li
                     key={n.id}
                     className="group flex items-center gap-2 rounded px-1 py-0.5"
-                    title={`${n.detail} — ${s.label} (${st.health.toFixed(0)}/100)`}
+                    title={`${n.detail}. ${s.label} (${st.health.toFixed(0)}/100)`}
                   >
                     <span
                       className={`h-1.5 w-1.5 shrink-0 rounded-full ${s.dot} ${

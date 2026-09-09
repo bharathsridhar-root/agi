@@ -7,17 +7,17 @@ export default function SimulatorSection() {
     <Section id="simulator" className="mt-28 sm:mt-36">
       <SectionHeader
         eyebrow="Interactive model"
-        title="Break something, then try to contain it"
-        lede="Pick an entry point and run it. Twenty systems, twenty-five dependencies, forty intervals. Then switch the safeguards on and run the same scenario again — the counterfactual panel keeps the other outcome on screen so the comparison is never from memory."
+        title="Break something, then try to stop it spreading"
+        lede="Pick where it starts and hit run. Twenty systems, twenty-six dependencies, forty intervals. Then turn the safeguards on and run the same thing again. The comparison panel keeps the other result on screen, so you're never going from memory."
       />
       <div className="mt-8">
         <CascadeSimulator />
       </div>
       <p className="mt-4 max-w-prose text-xs leading-relaxed text-ink-muted">
-        The model is deliberately simple and fully deterministic: the same scenario and the same
-        safeguard settings always produce the same run. Figures are illustrative outputs of this
-        model, chosen to show the shape of a cascade — they are not forecasts, and not drawn from
-        measured incidents.
+        The model is deliberately simple, and it always behaves the same way: same scenario and
+        same settings, same run, every time. The numbers come out of this model and are here to
+        show you the shape of a cascade. They are not predictions, and they are not measurements
+        of anything that has actually happened.
       </p>
     </Section>
   );

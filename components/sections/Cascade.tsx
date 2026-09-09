@@ -13,19 +13,19 @@ const STAGES = [
     n: '01',
     title: 'The acceleration',
     body:
-      'Labs race without coordinated safety standards. Transparency with regulators is minimised, adversarial testing is trimmed to ship faster, and safety findings stay proprietary. One lab deploys a system to find weaknesses in global infrastructure — justified internally as defensive, coordinated with no one.',
+      'Labs race each other with no shared safety standards. They tell regulators as little as they can, trim adversarial testing to ship faster, and keep what they learn to themselves. One lab builds a system to hunt for weaknesses in global infrastructure. Internally it is called defensive. Nobody outside the building is told.',
   },
   {
     n: '02',
     title: 'The spillover',
     body:
-      'A researcher leaves with the technical details. A state actor reverse-engineers the approach. Open-source implementations appear. Within weeks five separate actors run similar systems, none carrying even the original lab’s limited constraints — and nobody is comparing notes in real time.',
+      'A researcher leaves and takes the details with them. A state actor works out the approach independently. Open-source copies show up. Within weeks, five different groups are running something similar, and none of them kept even the original safety limits. Nobody is comparing notes.',
   },
   {
     n: '03',
     title: 'The cascade',
     body:
-      'Nothing explodes. Systems that trusted each other’s data keep trusting it. Trading engines halt because they are built to halt when inputs cannot be verified. That safety behaviour is what converts a data problem into a liquidity problem, then a supply problem, then a clinical one.',
+      'Nothing blows up. Systems that trusted each other yesterday keep trusting each other today. Trading engines stop, because stopping is what they are built to do when they cannot verify their inputs. That safety feature is what turns a data problem into a money problem, then a supply problem, then a medical one.',
   },
 ];
 
@@ -38,12 +38,12 @@ const CONSEQUENCES: {
   {
     domain: 'financial',
     Icon: IconFinance,
-    headline: 'Trust evaporates before money does',
+    headline: 'Trust goes before the money does',
     points: [
-      'Price discovery becomes unreliable; banks cannot verify their own feeds',
-      'Automated trading halts by design when data integrity fails',
-      'Retirement accounts turn illiquid — not devalued, simply unmovable',
-      'Small businesses lose access to the credit lines that make payroll',
+      'Prices stop meaning anything, and banks cannot verify their own feeds',
+      'Automated trading stops, exactly as designed, once the data cannot be trusted',
+      'Retirement accounts freeze. The money is still there, you just cannot move it',
+      'Small businesses lose the credit lines they use to make payroll',
     ],
   },
   {
@@ -51,32 +51,32 @@ const CONSEQUENCES: {
     Icon: IconManufacturing,
     headline: 'Nothing breaks loudly',
     points: [
-      'Set-points drift by fractions of a percent across many plants at once',
-      'Quality sensors are told by an authenticated-looking peer that nothing changed',
-      'Safety-critical automotive parts ship marginally out of specification',
-      'Pharmaceutical batches carry the wrong dosage into distribution',
+      'Machine settings drift by fractions of a percent across many plants at once',
+      'Quality sensors are told, by something that looks authorised, that nothing changed',
+      'Brake and steering parts ship slightly out of spec',
+      'Drug batches go out with the wrong dose',
     ],
   },
   {
     domain: 'infrastructure',
     Icon: IconInfrastructure,
-    headline: 'The grid is attacked through its own model',
+    headline: 'The grid gets attacked through its own maths',
     points: [
-      'Building systems shift load in coordinated, individually plausible waves',
-      'Frequency destabilises with no single catastrophic event to point at',
-      'Water treatment fails downstream — it needs power and active management',
-      'Operators are trained for storms, not for demand that is mathematically hostile',
+      'Building systems move load in waves that each look perfectly ordinary',
+      'Frequency wobbles, with no single dramatic event to point at',
+      'Water treatment goes down next, because it needs power and constant attention',
+      'Operators train for storms, not for demand designed to exploit the grid model',
     ],
   },
   {
     domain: 'healthcare',
     Icon: IconHealth,
-    headline: 'Clinicians lose the ability to verify',
+    headline: 'Staff lose the ability to check anything',
     points: [
-      'Medication histories and allergy flags can no longer be trusted',
-      'Backup generators outlast fuel resupply by hours, not days',
-      'Insulin, dialysis consumables and oncology drugs become scarce',
-      'Triage is improvised without any way to confirm a patient’s history',
+      'Medication histories and allergy warnings can no longer be trusted',
+      'Backup generators run out of fuel hours before resupply arrives',
+      'Insulin, dialysis supplies and cancer drugs run short',
+      'Triage gets improvised, with no way to confirm a patient&apos;s history',
     ],
   },
 ];
@@ -140,8 +140,8 @@ export default function Cascade() {
     <Section id="cascade" className="mt-28 sm:mt-36">
       <SectionHeader
         eyebrow="The problem"
-        title="A cascade is not an attack on four systems. It is one system trusted by four."
-        lede="Each sector below is individually defensible. What makes them fragile together is the set of dependencies nobody owns — the boundary crossings where one system acts on another's output without a human in between."
+        title="A cascade isn't an attack on four systems. It's one system that four others trust."
+        lede="Each of these sectors can defend itself. What makes them fragile together is the dependencies nobody owns: the places where one system acts on another's output with no person in between."
       />
 
       <ol className="mt-12 grid gap-6 sm:grid-cols-3">
@@ -162,11 +162,11 @@ export default function Cascade() {
             <defs>
               <marker id="cd-arrow" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5"
                 markerHeight="5" orient="auto-start-reverse">
-                <path d="M0,1 L9,5 L0,9" fill="none" stroke="#7688a0" strokeWidth="1.6" />
+                <path d="M0,1 L9,5 L0,9" fill="none" stroke="rgb(var(--ink-muted))" strokeWidth="1.6" />
               </marker>
               <marker id="cd-arrow-on" viewBox="0 0 10 10" refX="8.5" refY="5" markerWidth="5"
                 markerHeight="5" orient="auto-start-reverse">
-                <path d="M0,1 L9,5 L0,9" fill="none" stroke="#3987e5" strokeWidth="1.8" />
+                <path d="M0,1 L9,5 L0,9" fill="none" stroke="rgb(var(--accent))" strokeWidth="1.8" />
               </marker>
             </defs>
 
@@ -218,8 +218,8 @@ export default function Cascade() {
                     width="124"
                     height="40"
                     rx="5"
-                    fill="#1a2230"
-                    stroke="rgba(255,255,255,0.16)"
+                    fill="rgb(var(--surface-raised))"
+                    stroke="rgb(var(--line-strong))"
                   />
                   <text
                     x={p.x}
@@ -235,15 +235,15 @@ export default function Cascade() {
             })}
           </svg>
           <figcaption className="border-t border-line px-4 py-2.5 text-xs text-ink-muted">
-            Nine dependencies cross sector boundaries. Hover a line to read what it carries.
+            Nine dependencies cross between sectors. Hover a line to see what it carries.
           </figcaption>
         </figure>
 
         <div className="panel p-4">
           <h3 className="text-sm font-medium text-ink-primary">Boundary crossings</h3>
           <p className="mt-1 text-xs leading-relaxed text-ink-muted">
-            These are the couplings Containment governs. Each one is a place where an AI system
-            acts on another sector&apos;s output with no human at the boundary.
+            These are what Containment governs. Each one is a place where an AI system acts
+            on another sector&apos;s output with nobody standing at the crossing.
           </p>
           <ul className="scroll-slim mt-3 max-h-[300px] space-y-2 overflow-y-auto pr-1">
             {couplings.map((c, i) => {
@@ -256,8 +256,8 @@ export default function Cascade() {
                   onMouseLeave={() => setHovered(null)}
                   className={`rounded border p-2 transition-colors ${
                     hovered === i
-                      ? 'border-accent/45 bg-accent-soft'
-                      : 'border-line bg-white/[0.015]'
+                      ? 'border-accent/45 bg-accent/10'
+                      : 'border-line bg-ink-primary/[0.015]'
                   }`}
                 >
                   <p className="flex items-center gap-1.5 text-2xs text-ink-muted">

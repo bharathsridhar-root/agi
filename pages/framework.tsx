@@ -28,7 +28,7 @@ const LEVELS = [
     level: 'Level 2',
     actor: 'Independent auditor',
     Icon: IconUsers,
-    body: 'A third party — consultancy, research lab or NGO trained on the framework — reviews design documents, tests the system against misuse scenarios, and verifies that the safety constraints actually hold.',
+    body: 'Someone outside the company, a consultancy, research lab or NGO trained on the framework, reads the design docs, tries to misuse the system, and checks that the safety limits actually hold.',
     output: 'Published audit report, including findings',
   },
   {
@@ -110,7 +110,7 @@ export default function Framework() {
   return (
     <>
       <Head>
-        <title>Framework &amp; Certification — CAIGP</title>
+        <title>Framework &amp; Certification · CAIGP</title>
         <meta
           name="description"
           content="The Constitutional AI governance framework: five auditable principles, a three-level certification structure, four tiers, and modular policy templates for regulators."
@@ -122,12 +122,12 @@ export default function Framework() {
         <Section className="pt-32 sm:pt-36">
           <p className="eyebrow mb-5">Reference</p>
           <h1 className="max-w-3xl text-balance text-[32px] font-semibold leading-[1.1] tracking-[-0.03em] text-ink-primary sm:text-[46px]">
-            The framework, in the form a regulator could adopt
+            The framework, in a form a regulator could actually adopt
           </h1>
           <p className="mt-6 max-w-prose text-[16px] leading-relaxed text-ink-secondary">
-            The five principles are the foundation. On their own they are a position. What makes
-            them operational is everything below: who certifies, against what evidence, at which
-            tier, and with what consequence for failing. This page is the reference; the{' '}
+            The five principles are the foundation, but on their own they&apos;re just a
+            position. What makes them work is everything below: who certifies, on what evidence,
+            at which tier, and what happens if you fail. This page is the reference. The{' '}
             <TextLink href="/#simulator">simulator</TextLink> is where the same ideas are
             measured.
           </p>
@@ -146,8 +146,8 @@ export default function Framework() {
         <Section id="certification" className="mt-24">
           <SectionHeader
             eyebrow="Layer 2"
-            title="Certification is grassroots before it is regulatory"
-            lede="Waiting for a regulator is not a strategy. The structure is designed so that self-assessment and independent audit can start immediately, and so that a regulator arriving later inherits a body of evidence rather than a blank page."
+            title="This starts from the ground up, not from a regulator"
+            lede="Waiting for a regulator isn't a plan. This is built so self-assessment and independent audits can start today, and so that whenever a regulator does show up, they inherit a pile of evidence instead of a blank page."
           />
           <ol className="mt-10 grid gap-4 lg:grid-cols-3">
             {LEVELS.map((l) => (
@@ -175,7 +175,7 @@ export default function Framework() {
           <SectionHeader
             eyebrow="Layer 2"
             title="Four tiers, matched to consequence"
-            lede="The tier is set by what happens when the system is wrong, not by how advanced it is. A capable system doing something reversible needs less than a simple one wired into a power grid."
+            lede="The tier depends on what happens when the system is wrong, not on how clever it is. Something powerful doing reversible work needs less oversight than something simple wired into a power grid."
           />
           <div className="mt-10 overflow-x-auto">
             <table className="w-full min-w-[720px] border-collapse text-left">
@@ -224,7 +224,7 @@ export default function Framework() {
           <SectionHeader
             eyebrow="Layer 3"
             title="Modular policy templates"
-            lede="Each template is written to be adapted rather than adopted verbatim: a scope, the testing it implies, and the legal instrument a jurisdiction would actually use to put it in force."
+            lede="These are meant to be adapted, not copied word for word. Each one gives you a scope, the testing that follows from it, and the legal route a jurisdiction would actually use to make it stick."
           />
           <div className="mt-10 grid gap-4 sm:grid-cols-2">
             {TEMPLATES.map((t) => (
@@ -264,8 +264,8 @@ export default function Framework() {
                 See what the framework is worth under pressure
               </h2>
               <p className="mt-1 text-[13px] text-ink-secondary">
-                The simulator measures each principle&apos;s effect on the same incident, alone
-                and in combination.
+                The simulator measures what each principle is worth on the same incident, on
+                its own and combined with the others.
               </p>
             </div>
             <LinkButton href="/#simulator" size="md">

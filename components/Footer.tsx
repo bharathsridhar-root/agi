@@ -17,19 +17,24 @@ export default function Footer() {
               <span className="text-[15px] font-semibold text-ink-primary">CAIGP</span>
             </div>
             <p className="mt-3 max-w-sm text-[13px] leading-relaxed text-ink-muted">
-              The Constitutional AI Governance Platform. An educational model of how failures
-              cascade between AI-managed systems, and how five safeguards change the outcome.
+              The Constitutional AI Governance Platform. A teaching model of how one failure
+              spreads between AI-managed systems, and what five safeguards do about it.
             </p>
             <p className="mt-4 max-w-sm text-xs leading-relaxed text-ink-muted">
-              The scenarios here are deliberately hypothetical. Figures come from the
-              platform&apos;s own model, not from measured incidents, and are intended to show
-              the shape of a cascade rather than to forecast one.
+              The scenarios here are made up on purpose. The numbers come from this site&apos;s
+              own model rather than from real incidents, and they are here to show you the shape
+              of a cascade, not to predict one.
             </p>
           </div>
 
           <div>
             <h3 className="eyebrow mb-3">Explore</h3>
             <ul className="space-y-2 text-[13px]">
+              <li>
+                <a href="/#comic" className="text-ink-secondary transition-colors hover:text-ink-primary">
+                  The short version
+                </a>
+              </li>
               <li>
                 <a href="/#cascade" className="text-ink-secondary transition-colors hover:text-ink-primary">
                   The Cascade
@@ -92,7 +97,7 @@ export default function Footer() {
             Constitutional AI Governance Platform
           </p>
           <p className="text-xs text-ink-muted">
-            Educational demonstration · not affiliated with any deployed system
+            A teaching demo. Not connected to any system that actually runs anything.
           </p>
         </div>
       </div>

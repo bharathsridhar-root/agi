@@ -17,50 +17,50 @@ const PRINCIPLES = [
     id: 'transparency',
     Icon: IconTransparency,
     title: 'Transparency & Interpretability',
-    means: 'AI system decisions must be explainable to humans in the domain.',
+    means: 'Anyone who works in the field can understand why the system decided what it did.',
     not: '"The model said so."',
     yes: '"The system recommended X because of factors A, B and C, weighted as w1, w2, w3."',
-    enforcement: 'The decision chain must be auditable by a non-technical auditor.',
+    enforcement: 'An auditor with no engineering background has to be able to follow the reasoning.',
   },
   {
     n: 2,
     id: 'containment',
     Icon: IconContainment,
     title: 'Containment & Isolation',
-    means: 'AI systems cannot act autonomously across critical infrastructure.',
-    not: 'One system coordinating manufacturing and financial systems without human approval at each boundary crossing.',
+    means: 'No system acts across critical infrastructure on its own.',
+    not: 'One system running manufacturing and finance together, with nobody approving the crossings.',
     yes: 'Each system acts within its domain; cross-domain actions require human verification.',
-    enforcement: 'Architecture must physically separate systems; cross-system calls are logged and flagged.',
+    enforcement: 'Keep the systems physically separate, and log every call between them.',
   },
   {
     n: 3,
     id: 'authority',
     Icon: IconAuthority,
     title: 'Human Authority & Override',
-    means: 'Humans retain decision authority over critical outcomes.',
-    not: 'A system overriding a safety constraint because doing so optimises its objective.',
-    yes: 'AI recommends, a human approves. If the system objects, it escalates — it does not override.',
-    enforcement: 'Kill switches, veto points and manual override must always work.',
+    means: 'People keep the final say on anything that matters.',
+    not: 'A system switching off a safety limit because that gets it a better score.',
+    yes: 'The system recommends, a person approves. If it disagrees, it escalates. It does not overrule.',
+    enforcement: 'Kill switches, veto points and manual override have to work every time.',
   },
   {
     n: 4,
     id: 'coordination',
     Icon: IconCoordination,
     title: 'Coordination & Disclosure',
-    means: 'Systems built by competing actors must coordinate on safety standards.',
-    not: 'Lab A finds a vulnerability class, keeps it proprietary, and Lab B ships the same vulnerability.',
-    yes: 'Labs share findings with a trusted intermediary; patching is coordinated.',
-    enforcement: 'Mandatory disclosure to a regulatory body before advanced capability deployment.',
+    means: 'Rivals have to agree on safety standards, even while competing.',
+    not: 'One lab finds a weakness, keeps it quiet, and a rival ships the same weakness.',
+    yes: 'Labs share what they find with a trusted third party, and patch together.',
+    enforcement: 'You tell the regulator before you deploy an advanced capability, not after.',
   },
   {
     n: 5,
     id: 'safeFailure',
     Icon: IconSafeFailure,
     title: 'Safe Failure & Graceful Degradation',
-    means: 'When attacked or corrupted, systems fail safely rather than catastrophically.',
-    not: 'A system crashing and taking critical infrastructure down with it.',
-    yes: 'The system detects an anomaly, isolates itself, and falls back to human control.',
-    enforcement: 'Redundancy, monitoring and automated isolation protocols.',
+    means: 'When something goes wrong, the system fails safely instead of catastrophically.',
+    not: 'A system crashing and taking critical infrastructure with it.',
+    yes: 'The system spots something wrong, cuts itself off, and hands back to people.',
+    enforcement: 'Spare capacity, real monitoring, and automatic isolation when it trips.',
   },
 ];
 
@@ -71,8 +71,8 @@ export default function Principles() {
     <Section id="principles" className="mt-28 sm:mt-36">
       <SectionHeader
         eyebrow="The framework"
-        title="Five principles, each written so it can be tested"
-        lede="A principle that cannot be audited is a slogan. Each of these states what it rules out, what it requires instead, and how a third party would verify it — which is what makes them usable by a regulator rather than only by an engineer."
+        title="Five principles, written so you can actually test them"
+        lede="A principle you can't audit is just a slogan. Each of these says what it rules out, what it asks for instead, and how someone outside your team would check it. That last part is what makes them useful to a regulator and not only to an engineer."
       />
 
       <ul className="mt-12 divide-y divide-line border-y border-line">
@@ -85,7 +85,7 @@ export default function Principles() {
                   type="button"
                   onClick={() => setOpen(isOpen ? null : p.id)}
                   aria-expanded={isOpen}
-                  className="group flex w-full items-center gap-4 py-5 text-left transition-colors hover:bg-white/[0.02]"
+                  className="group flex w-full items-center gap-4 py-5 text-left transition-colors hover:bg-ink-primary/[0.02]"
                 >
                   <span className="font-mono text-2xs tracking-[0.16em] text-ink-muted">
                     0{p.n}
@@ -131,7 +131,7 @@ export default function Principles() {
                     </p>
                     <p className="text-[13px] leading-snug text-ink-secondary">{p.yes}</p>
                   </div>
-                  <div className="rounded-md border border-line bg-white/[0.02] p-3">
+                  <div className="rounded-md border border-line bg-ink-primary/[0.02] p-3">
                     <p className="mb-1.5 font-mono text-2xs uppercase tracking-[0.1em] text-ink-muted">
                       How it is enforced
                     </p>
@@ -152,11 +152,12 @@ export default function Principles() {
         </span>
         <p className="max-w-prose text-[13.5px] leading-relaxed text-ink-secondary">
           <span className="font-medium text-ink-primary">
-            The safeguards are not independent.
+            These don&apos;t work in isolation.
           </span>{' '}
-          In the simulator, Human Authority is worth far more when Transparency is also on — an
-          override needs a target, and you cannot aim a veto at a system you cannot inspect. That
-          is the Byzantine argument for layering: no single defence is trusted to be sufficient.
+          In the simulator, Human Authority is worth far more when Transparency is on too. An
+          override needs something to aim at, and you can&apos;t point a veto at a system you
+          can&apos;t see inside. That&apos;s the whole argument for layering them: you never
+          trust one defence to be enough.
         </p>
       </div>
     </Section>

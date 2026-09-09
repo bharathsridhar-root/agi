@@ -1,4 +1,10 @@
 /** @type {import('tailwindcss').Config} */
+
+// Every colour is a CSS variable holding an "R G B" triplet, so Tailwind's
+// alpha modifiers (bg-accent/10, border-line/40) still work and both themes
+// swap in one place. Values live in styles/globals.css.
+const v = (name) => `rgb(var(--${name}) / <alpha-value>)`;
+
 module.exports = {
   content: [
     './pages/**/*.{js,ts,jsx,tsx}',
@@ -8,36 +14,37 @@ module.exports = {
   theme: {
     extend: {
       colors: {
-        plane: '#0a0e14',
+        plane: v('plane'),
         surface: {
-          DEFAULT: '#141b26',
-          raised: '#1a2230',
-          sunken: '#0f141d',
+          DEFAULT: v('surface'),
+          raised: v('surface-raised'),
+          sunken: v('surface-sunken'),
         },
         ink: {
-          primary: '#f1f5f9',
-          secondary: '#94a3b8',
-          muted: '#7688a0',
+          primary: v('ink-primary'),
+          secondary: v('ink-secondary'),
+          muted: v('ink-muted'),
         },
         line: {
-          DEFAULT: 'rgba(255,255,255,0.09)',
-          strong: 'rgba(255,255,255,0.16)',
+          DEFAULT: v('line'),
+          strong: v('line-strong'),
         },
         accent: {
-          DEFAULT: '#3987e5',
-          soft: 'rgba(57,135,229,0.12)',
+          DEFAULT: v('accent'),
+          hover: v('accent-hover'),
+          on: v('accent-on'),
         },
         status: {
-          good: '#0ca30c',
-          warning: '#fab219',
-          serious: '#ec835a',
-          critical: '#d03b3b',
+          good: v('status-good'),
+          warning: v('status-warning'),
+          serious: v('status-serious'),
+          critical: v('status-critical'),
         },
         series: {
-          1: '#3987e5',
-          2: '#d95926',
-          3: '#199e70',
-          4: '#c98500',
+          1: v('series-1'),
+          2: v('series-2'),
+          3: v('series-3'),
+          4: v('series-4'),
         },
       },
       fontFamily: {
@@ -49,16 +56,20 @@ module.exports = {
       },
       maxWidth: { content: '76rem', prose: '44rem' },
       keyframes: {
-        'fade-up': { '0%': { opacity: '0', transform: 'translateY(12px)' }, '100%': { opacity: '1', transform: 'none' } },
+        'fade-up': {
+          '0%': { opacity: '0', transform: 'translateY(12px)' },
+          '100%': { opacity: '1', transform: 'none' },
+        },
         'fade-in': { '0%': { opacity: '0' }, '100%': { opacity: '1' } },
-        'pulse-ring': { '0%': { transform: 'scale(0.9)', opacity: '0.7' }, '100%': { transform: 'scale(1.8)', opacity: '0' } },
-        sweep: { '0%': { transform: 'translateX(-100%)' }, '100%': { transform: 'translateX(100%)' } },
+        'panel-in': {
+          '0%': { opacity: '0', transform: 'translateY(8px) scale(0.99)' },
+          '100%': { opacity: '1', transform: 'none' },
+        },
       },
       animation: {
         'fade-up': 'fade-up 0.5s cubic-bezier(0.16,1,0.3,1) both',
         'fade-in': 'fade-in 0.4s ease-out both',
-        'pulse-ring': 'pulse-ring 1.6s ease-out infinite',
-        sweep: 'sweep 2s linear infinite',
+        'panel-in': 'panel-in 0.35s cubic-bezier(0.16,1,0.3,1) both',
       },
     },
   },

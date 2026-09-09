@@ -74,7 +74,7 @@ export default function CityView({
 
   return (
     <div
-      className="relative overflow-hidden rounded-lg border border-line"
+      className="display-panel relative overflow-hidden rounded-lg border border-line"
       style={{ background: m.sky, transition: 'background 700ms ease' }}
     >
       {/* The schematic is capped in width and centred: at full container width

@@ -115,8 +115,8 @@ export default function CascadeSimulator() {
               aria-pressed={s.id === scenarioId}
               className={`rounded-md border px-2.5 py-1.5 text-xs font-medium transition-colors ${
                 s.id === scenarioId
-                  ? 'border-accent/50 bg-accent-soft text-ink-primary'
-                  : 'border-line text-ink-secondary hover:border-line-strong hover:bg-white/5 hover:text-ink-primary'
+                  ? 'border-accent/50 bg-accent/10 text-ink-primary'
+                  : 'border-line text-ink-secondary hover:border-line-strong hover:bg-ink-primary/5 hover:text-ink-primary'
               }`}
             >
               {s.label}
@@ -168,7 +168,7 @@ export default function CascadeSimulator() {
           Interval {state.tick}/{MAX_TICKS}
         </div>
 
-        <div className="ml-auto h-1 w-24 overflow-hidden rounded-full bg-white/[0.07]">
+        <div className="ml-auto h-1 w-24 overflow-hidden rounded-full bg-ink-primary/[0.07]">
           <div
             className="h-full rounded-full bg-accent transition-[width] duration-300"
             style={{ width: `${(state.tick / MAX_TICKS) * 100}%` }}
@@ -225,7 +225,7 @@ export default function CascadeSimulator() {
               Same scenario, {anyOn ? 'no safeguards' : 'all five safeguards'}
             </h3>
             <p className="mt-0.5 text-xs text-ink-muted">
-              Full run, for comparison against yours.
+              A full run, so you can compare.
             </p>
             <dl className="mt-3 space-y-2">
               {[

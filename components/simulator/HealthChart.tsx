@@ -1,11 +1,13 @@
 import React, { useMemo, useRef, useState } from 'react';
 import type { SimState } from '@/lib/simulation';
 
+// Colours come from CSS variables so both themes are handled by the
+// stylesheet and there is no theme state to hydrate in JS.
 const SERIES = [
-  { key: 'financial', label: 'Financial', color: '#3987e5' },
-  { key: 'healthcare', label: 'Healthcare', color: '#d95926' },
-  { key: 'manufacturing', label: 'Manufacturing', color: '#199e70' },
-  { key: 'infrastructure', label: 'Infrastructure', color: '#c98500' },
+  { key: 'financial', label: 'Financial', color: 'rgb(var(--series-1))' },
+  { key: 'healthcare', label: 'Healthcare', color: 'rgb(var(--series-2))' },
+  { key: 'manufacturing', label: 'Manufacturing', color: 'rgb(var(--series-3))' },
+  { key: 'infrastructure', label: 'Infrastructure', color: 'rgb(var(--series-4))' },
 ] as const;
 
 type SeriesKey = (typeof SERIES)[number]['key'];
@@ -93,13 +95,13 @@ export default function HealthChart({
         <div>
           <h4 className="text-sm font-medium text-ink-primary">Sector capacity over time</h4>
           <p className="mt-0.5 text-xs text-ink-muted">
-            Mean operational capacity per sector, 100 = normal service.
+            Average capacity per sector. 100 means normal service.
           </p>
         </div>
         <button
           type="button"
           onClick={() => setShowTable((v) => !v)}
-          className="rounded border border-line-strong px-2 py-1 font-mono text-2xs uppercase tracking-[0.1em] text-ink-secondary transition-colors hover:bg-white/5 hover:text-ink-primary"
+          className="rounded border border-line-strong px-2 py-1 font-mono text-2xs uppercase tracking-[0.1em] text-ink-secondary transition-colors hover:bg-ink-primary/5 hover:text-ink-primary"
           aria-pressed={showTable}
         >
           {showTable ? 'Show chart' : 'Show table'}
@@ -156,7 +158,7 @@ export default function HealthChart({
                   x2={PAD.left + plotW}
                   y1={y(v)}
                   y2={y(v)}
-                  stroke="rgba(255,255,255,0.07)"
+                  stroke="rgb(var(--ink-muted) / 0.22)"
                   strokeWidth="1"
                 />
                 <text
@@ -177,7 +179,7 @@ export default function HealthChart({
               x2={PAD.left + plotW}
               y1={y(25)}
               y2={y(25)}
-              stroke="#d03b3b"
+              stroke="rgb(var(--status-critical))"
               strokeWidth="1"
               strokeDasharray="3 3"
               opacity="0.5"
@@ -197,7 +199,7 @@ export default function HealthChart({
               x2={PAD.left + plotW}
               y1={PAD.top + plotH}
               y2={PAD.top + plotH}
-              stroke="rgba(255,255,255,0.16)"
+              stroke="rgb(var(--ink-muted) / 0.45)"
               strokeWidth="1"
             />
             {[0, 10, 20, 30, 40].filter((t) => t <= maxTicks).map((t) => (
@@ -220,7 +222,7 @@ export default function HealthChart({
                 x2={x(hovered.tick)}
                 y1={PAD.top}
                 y2={PAD.top + plotH}
-                stroke="rgba(255,255,255,0.3)"
+                stroke="rgb(var(--ink-muted) / 0.7)"
                 strokeWidth="1"
               />
             ) : null}
@@ -247,7 +249,7 @@ export default function HealthChart({
                     cy={y(hovered[s.key])}
                     r="4.5"
                     fill={s.color}
-                    stroke="#141b26"
+                    stroke="rgb(var(--chart-surface))"
                     strokeWidth="2"
                   />
                 ))
